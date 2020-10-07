@@ -1,3 +1,4 @@
+import random
 
 def get_reynolds_num(speed, length, kinematic_viscocity):
     return speed*length/kinematic_viscocity
@@ -10,3 +11,9 @@ def c_to_k(c):
 
 def knots_to_ms(knots):
     return knots*.514444
+
+def altitude_to_temp(altitude_feet):
+    return -0.002 * altitude_feet + 18.976
+
+def rand(min_inclusive, max_exclusive):
+    return random.random()*(max_exclusive-min_inclusive)+min_inclusive
