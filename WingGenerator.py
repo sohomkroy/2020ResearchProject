@@ -71,4 +71,4 @@ def generate_wing(m, p, t, resolution, filename):
     return mean_camber_length
 
 
-#generate_wing(2, 1, 24, 100, "./XFOIL6.99/" + "wing1")
+generate_wing(2, 1, 24, 100, "./XFOIL6.99/" + "wing1")

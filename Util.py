@@ -15,5 +15,6 @@ def knots_to_ms(knots):
 def altitude_to_temp(altitude_feet):
     return -0.002 * altitude_feet + 18.976
 
-def rand(min_inclusive, max_exclusive):
-    return random.random()*(max_exclusive-min_inclusive)+min_inclusive
+def rand(a, b):
+    return random.uniform(a, b)
+
