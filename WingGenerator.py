@@ -2,18 +2,19 @@ import numpy as np
 import math
 
 #Generates wing geometry with unit chord length, returns mean camber length
-def generate_wing(m, p, t, resolution, filename):
+def generate_wing(m, p, t, resolution, filename, flag):
     m = m/100
     p = p/10
     t = t/100
 
-    range1 = np.linspace(1,0,resolution)
+    range1 = np.linspace(math.pi,0,resolution)
 
     top_wing = []
     bottom_wing = []
 
     #generate coordinates
-    for x in range1:
+    for beta in range1:
+        x = (1-math.cos(beta))/2
         y_t = 5*t*(0.2969*math.sqrt(x)-.1260*x-0.3516*math.pow(x, 2) + 0.2843*math.pow(x, 3) - 0.1015*math.pow(x, 4))
 
         if (p!=0):
@@ -25,7 +26,7 @@ def generate_wing(m, p, t, resolution, filename):
             if (0<=x<=p):
                 dy_c_dx = 2*m/math.pow(p, 2)*(p-x)
             else:
-                dy_c_dx = m/math.pow(1-p, 2)*(p-x)
+                dy_c_dx = 2*m/math.pow(1-p, 2)*(p-x)
 
 
             theta = math.atan2(dy_c_dx, 1)
@@ -41,16 +42,26 @@ def generate_wing(m, p, t, resolution, filename):
             yU=y_t
             yL=-y_t
 
+        if (yU > 2):
+            pass
+        if (yL < -2):
+            pass
 
-        top_wing.append(str(xU) + '     ' + str(yU))
-        bottom_wing.append(str(xL) + "     " + str(yL))
+        if (flag):
+            top_wing.append(str(xU) + "\t" + str(yU))
+        else:
+            top_wing.append(str(xU) + "     " + str(yU))
+        if (flag):
+            bottom_wing.append(str(xL) + "\t" + str(yL))
+        else:
+            bottom_wing.append(str(xL) + "     " + str(yL))
 
     bottom_wing = bottom_wing[::-1]
     del bottom_wing[0]
 
     #write to file
     f = open(filename, "w")
-    f.write(filename + "\n")
+    #f.write(filename + "\n")
     f.write("\n".join(top_wing))
     f.write("\n")
     f.write("\n".join(bottom_wing))
@@ -71,4 +82,4 @@ def generate_wing(m, p, t, resolution, filename):
     return mean_camber_length
 
 
-generate_wing(2, 1, 24, 100, "./XFOIL6.99/" + "wing1")
+#generate_wing(2, 1, 24, 100, "./XFOIL6.99/" + "wing1")
